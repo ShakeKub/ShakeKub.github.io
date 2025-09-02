@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Strategy Advisor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background -->
+    <div class="background-gradient"></div>
+    
+    <!-- Loading Animation -->
+    <div class="loading-animation" id="loadingAnimation">
+        <div class="loading-container">
+            <h2>Blackjack Strategy Advisor</h2>
+            <div class="dealing-cards">
+                <div class="card-deal card-1"></div>
+                <div class="card-deal card-2"></div>
+                <div class="card-deal card-3"></div>
+                <div class="card-deal card-4"></div>
+                <div class="card-deal card-5"></div>
+            </div>
+            <p class="loading-text">Dealing cards...</p>
+        </div>
+    </div>
+    
+    <!-- Info Button -->
+    <button class="info-button" id="infoBtn" title="Strategy Information">
+        <span>?</span>
+    </button>
+    
+    <!-- Main Container -->
+    <div class="main-container" id="mainContainer">
+        <h1 class="title">Blackjack Strategy Advisor</h1>
+        <p class="subtitle">Make the right move every time</p>
+        <p class="auto-info">Strategy updates automatically as you select cards</p>
+        
+        <!-- Card Selection Section -->
+        <div class="card-selection">
+            <div class="section">
+                <h3>Your Hand</h3>
+                <div class="hand-container">
+                    <div class="card-input">
+                        <select id="playerCard1" class="card-select">
+                            <option value="">-</option>
+                            <option value="A">A</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="J">J</option>
+                            <option value="Q">Q</option>
+                            <option value="K">K</option>
+                        </select>
+                        <select id="playerCard2" class="card-select">
+                            <option value="">-</option>
+                            <option value="A">A</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="J">J</option>
+                            <option value="Q">Q</option>
+                            <option value="K">K</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Player Cards Display -->
+                <div class="cards-display" id="playerCards">
+                    <!-- Cards will be dynamically added here -->
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Dealer's Upcard</h3>
+                <div class="dealer-container">
+                    <div class="card-input">
+                        <select id="dealerCard" class="card-select">
+                            <option value="">-</option>
+                            <option value="A">A</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="J">J</option>
+                            <option value="Q">Q</option>
+                            <option value="K">K</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Dealer Card Display -->
+                <div class="cards-display" id="dealerCards">
+                    <!-- Dealer card will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Split Hands Container (Hidden by default) -->
+        <div class="split-hands-container" id="splitHandsContainer" style="display: none;">
+            <div class="split-hand">
+                <h4>Hand 1</h4>
+                <div class="cards-display" id="splitHand1Cards"></div>
+                <div class="split-card-input">
+                    <select id="splitHand1Card" class="card-select">
+                        <option value="">Add Card</option>
+                        <option value="A">A</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="J">J</option>
+                        <option value="Q">Q</option>
+                        <option value="K">K</option>
+                    </select>
+                    <button class="btn-split-add" id="addSplitHand1Card">+</button>
+                </div>
+                <div class="strategy-result" id="splitHand1Strategy"></div>
+            </div>
+            <div class="split-hand">
+                <h4>Hand 2</h4>
+                <div class="cards-display" id="splitHand2Cards"></div>
+                <div class="split-card-input">
+                    <select id="splitHand2Card" class="card-select">
+                        <option value="">Add Card</option>
+                        <option value="A">A</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="J">J</option>
+                        <option value="Q">Q</option>
+                        <option value="K">K</option>
+                    </select>
+                    <button class="btn-split-add" id="addSplitHand2Card">+</button>
+                </div>
+                <div class="strategy-result" id="splitHand2Strategy"></div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="button-container">
+            <button class="btn-primary" id="getStrategyBtn">
+                <span>Get Strategy</span>
+                <div class="glow-effect"></div>
+            </button>
+            <button class="btn-secondary" id="resetBtn">
+                <span>Reset</span>
+            </button>
+        </div>
+        
+        <!-- Strategy Result -->
+        <div class="strategy-result" id="strategyResult">
+            <!-- Strategy advice will appear here -->
+        </div>
+        
+        <!-- Hit Card Input (Hidden by default) -->
+        <div class="hit-card-input" id="hitCardInput" style="display: none;">
+            <h4>Next Card:</h4>
+            <select id="hitCard" class="card-select">
+                <option value="">-</option>
+                <option value="A">A</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="J">J</option>
+                <option value="Q">Q</option>
+                <option value="K">K</option>
+            </select>
+            <button class="btn-secondary" id="addHitCard">Add Card</button>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Based on basic Blackjack strategy</p>
+            <p class="shortcuts">Shortcuts: Ctrl+R (Reset)</p>
+            <p class="made-by">Made by <a href="https://github.com/ShakeKub" target="_blank" class="author">ShakeKub</a></p>
+        </footer>
+    </div>
+    
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="infoModal">
+            <div class="modal-header">
+                <h3>Blackjack Guide & Strategy</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-section">
+                    <h4>🎯 What is Blackjack?</h4>
+                    <p><strong>Goal:</strong> Get cards totaling as close to 21 as possible without going over (busting).</p>
+                    <p><strong>Blackjack:</strong> An Ace + any 10-value card (10, J, Q, K) = 21 points</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>🃏 Card Values</h4>
+                    <ul>
+                        <li><strong>Ace (A):</strong> 1 or 11 points (whichever is better)</li>
+                        <li><strong>Face cards (J, Q, K):</strong> 10 points each</li>
+                        <li><strong>Number cards (2-10):</strong> Face value</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>📋 Basic Actions</h4>
+                    <ul>
+                        <li><strong>Hit:</strong> Take another card to increase your total</li>
+                        <li><strong>Stand:</strong> Keep your current hand (no more cards)</li>
+                        <li><strong>Double:</strong> Double your bet and take exactly one more card</li>
+                        <li><strong>Split:</strong> Split identical cards into two separate hands</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>🧮 How This Advisor Works</h4>
+                    <p>This tool uses <strong>mathematically optimal basic strategy</strong> based on probability calculations. The recommendations are derived from computer simulations of millions of hands to determine the statistically best move for every possible combination.</p>
+                </div>
+
+                <div class="modal-section disclaimer">
+                    <h4>⚠️ Important Disclaimer</h4>
+                    <p><strong>This is an educational tool only.</strong> While the strategies provided are mathematically sound and based on optimal basic strategy, gambling involves inherent risk. </p>
+                    <p><strong>No guarantee of winnings:</strong> Casino games have a built-in house edge, and no strategy can guarantee profits. Past performance does not indicate future results.</p>
+                    <p><strong>Responsibility:</strong> The creator of this advisor assumes no responsibility for any financial losses incurred through the use of this tool. Always gamble responsibly and within your means.</p>
+                    <p><em>Strategy assumes standard blackjack rules and does not account for card counting or table-specific variations.</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
