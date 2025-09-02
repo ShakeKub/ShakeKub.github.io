@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background -->
     <div class="background-gradient"></div>
     
-    <!-- Loading Animation -->
     <div class="loading-animation" id="loadingAnimation">
         <div class="loading-container">
             <h2>Blackjack Strategy Advisor</h2>
@@ -25,18 +23,15 @@
         </div>
     </div>
     
-    <!-- Info Button -->
     <button class="info-button" id="infoBtn" title="Strategy Information">
         <span>?</span>
     </button>
     
-    <!-- Main Container -->
     <div class="main-container" id="mainContainer">
         <h1 class="title">Blackjack Strategy Advisor</h1>
         <p class="subtitle">Make the right move every time</p>
         <p class="auto-info">Strategy updates automatically as you select cards</p>
         
-        <!-- Card Selection Section -->
         <div class="card-selection">
             <div class="section">
                 <h3>Your Hand</h3>
@@ -77,9 +72,7 @@
                     </div>
                 </div>
                 
-                <!-- Player Cards Display -->
                 <div class="cards-display" id="playerCards">
-                    <!-- Cards will be dynamically added here -->
                 </div>
             </div>
             
@@ -106,14 +99,11 @@
                     </div>
                 </div>
                 
-                <!-- Dealer Card Display -->
                 <div class="cards-display" id="dealerCards">
-                    <!-- Dealer card will be dynamically added here -->
                 </div>
             </div>
         </div>
         
-        <!-- Split Hands Container (Hidden by default) -->
         <div class="split-hands-container" id="splitHandsContainer" style="display: none;">
             <div class="split-hand">
                 <h4>Hand 1</h4>
@@ -165,7 +155,6 @@
             </div>
         </div>
         
-        <!-- Action Buttons -->
         <div class="button-container">
             <button class="btn-primary" id="getStrategyBtn">
                 <span>Get Strategy</span>
@@ -176,12 +165,9 @@
             </button>
         </div>
         
-        <!-- Strategy Result -->
         <div class="strategy-result" id="strategyResult">
-            <!-- Strategy advice will appear here -->
         </div>
         
-        <!-- Hit Card Input (Hidden by default) -->
         <div class="hit-card-input" id="hitCardInput" style="display: none;">
             <h4>Next Card:</h4>
             <select id="hitCard" class="card-select">
@@ -203,7 +189,6 @@
             <button class="btn-secondary" id="addHitCard">Add Card</button>
         </div>
         
-        <!-- Footer -->
         <footer class="footer">
             <p>Based on basic Blackjack strategy</p>
             <p class="shortcuts">Shortcuts: Ctrl+R (Reset)</p>
@@ -211,7 +196,6 @@
         </footer>
     </div>
     
-    <!-- Info Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal" id="infoModal">
             <div class="modal-header">

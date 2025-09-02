@@ -1,4 +1,3 @@
-// Blackjack Strategy Advisor JavaScript
 class BlackjackStrategyAdvisor {
     constructor() {
         this.initializeElements();
@@ -27,7 +26,6 @@ class BlackjackStrategyAdvisor {
         this.addHitCardBtn = document.getElementById('addHitCard');
         this.loadingAnimation = document.getElementById('loadingAnimation');
         
-        // Split hand elements
         this.splitHand1Card = document.getElementById('splitHand1Card');
         this.splitHand2Card = document.getElementById('splitHand2Card');
         this.addSplitHand1CardBtn = document.getElementById('addSplitHand1Card');
@@ -37,14 +35,12 @@ class BlackjackStrategyAdvisor {
     }
 
     bindEvents() {
-        // Button events
         this.getStrategyBtn.addEventListener('click', () => this.getStrategy());
         this.resetBtn.addEventListener('click', () => this.reset());
         this.addHitCardBtn.addEventListener('click', () => this.addManualHitCard());
         this.addSplitHand1CardBtn.addEventListener('click', () => this.addSplitCard(1));
         this.addSplitHand2CardBtn.addEventListener('click', () => this.addSplitCard(2));
         
-        // Card selection events
         this.playerCard1.addEventListener('change', () => {
             this.updatePlayerCards();
             this.autoShowStrategy();
@@ -58,14 +54,12 @@ class BlackjackStrategyAdvisor {
             this.autoShowStrategy();
         });
         
-        // Modal events
         this.infoBtn.addEventListener('click', () => this.showModal());
         this.modalClose.addEventListener('click', () => this.hideModal());
         this.modalOverlay.addEventListener('click', (e) => {
             if (e.target === this.modalOverlay) this.hideModal();
         });
         
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'r') {
                 e.preventDefault();
@@ -76,49 +70,39 @@ class BlackjackStrategyAdvisor {
             }
         });
         
-        // Add animation on page load
         setTimeout(() => {
             this.mainContainer.style.opacity = '1';
         }, 100);
         
-        // Hide loading animation after cards are dealt
         this.hideLoadingAnimation();
     }
 
     hideLoadingAnimation() {
-        // Wait for all cards to be dealt (last card at 1.0s + 0.6s animation)
         setTimeout(() => {
             if (this.loadingAnimation) {
                 this.loadingAnimation.classList.add('fade-out');
-                // Show main container
                 this.mainContainer.classList.add('show');
-                // Remove loading from DOM after fade out
                 setTimeout(() => {
                     if (this.loadingAnimation && this.loadingAnimation.parentNode) {
                         this.loadingAnimation.parentNode.removeChild(this.loadingAnimation);
                     }
                 }, 500);
             }
-        }, 2000); // 1.6s for dealing + 0.4s extra
+        }, 2000);
     }
 
     autoShowStrategy() {
-        // Automatically show strategy when all cards are selected
         if (this.playerCard1.value && this.playerCard2.value && this.dealerCard.value) {
-            // Small delay to allow UI to update
             setTimeout(() => {
                 this.getStrategy(null, null, false);
             }, 100);
         } else {
-            // Clear strategy if not all cards are selected
             this.clearStrategy();
         }
     }
 
     createStrategyChart() {
-        // Basic Blackjack Strategy Chart
         return {
-            // Hard totals (no aces or aces counted as 1)
             hard: {
                 5: { 2: 'H', 3: 'H', 4: 'H', 5: 'H', 6: 'H', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'A': 'H' },
                 6: { 2: 'H', 3: 'H', 4: 'H', 5: 'H', 6: 'H', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'A': 'H' },
@@ -138,7 +122,6 @@ class BlackjackStrategyAdvisor {
                 20: { 2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'S', 8: 'S', 9: 'S', 10: 'S', 'A': 'S' },
                 21: { 2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'S', 8: 'S', 9: 'S', 10: 'S', 'A': 'S' }
             },
-            // Soft totals (ace counted as 11)
             soft: {
                 13: { 2: 'H', 3: 'H', 4: 'H', 5: 'D', 6: 'D', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'A': 'H' },
                 14: { 2: 'H', 3: 'H', 4: 'H', 5: 'D', 6: 'D', 7: 'H', 8: 'H', 9: 'H', 10: 'H', 'A': 'H' },
@@ -150,7 +133,6 @@ class BlackjackStrategyAdvisor {
                 20: { 2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'S', 8: 'S', 9: 'S', 10: 'S', 'A': 'S' },
                 21: { 2: 'S', 3: 'S', 4: 'S', 5: 'S', 6: 'S', 7: 'S', 8: 'S', 9: 'S', 10: 'S', 'A': 'S' }
             },
-            // Pairs
             pairs: {
                 'AA': { 2: 'SP', 3: 'SP', 4: 'SP', 5: 'SP', 6: 'SP', 7: 'SP', 8: 'SP', 9: 'SP', 10: 'SP', 'A': 'SP' },
                 '22': { 2: 'H', 3: 'H', 4: 'SP', 5: 'SP', 6: 'SP', 7: 'SP', 8: 'H', 9: 'H', 10: 'H', 'A': 'H' },
@@ -192,7 +174,6 @@ class BlackjackStrategyAdvisor {
             }
         }
         
-        // Adjust for aces
         while (total > 21 && aces > 0) {
             total -= 10;
             aces--;
@@ -202,7 +183,6 @@ class BlackjackStrategyAdvisor {
     }
 
     isPair(card1, card2) {
-        // Normalize face cards
         const normalizeCard = (card) => {
             if (['J', 'Q', 'K'].includes(card)) return '10';
             return card;
@@ -212,7 +192,6 @@ class BlackjackStrategyAdvisor {
     }
 
     getStrategy(playerCards = null, dealerUpcard = null, showError = true) {
-        // Use provided cards or get from selects
         const card1 = playerCards ? playerCards[0] : this.playerCard1.value;
         const card2 = playerCards ? playerCards[1] : this.playerCard2.value;
         const dealer = dealerUpcard || this.dealerCard.value;
@@ -231,19 +210,16 @@ class BlackjackStrategyAdvisor {
         let strategy;
         let handType;
         
-        // Check for pairs first
         if (this.isPair(card1, card2)) {
             const pairKey = card1 === 'A' ? 'AA' : 
                            (['J', 'Q', 'K'].includes(card1) ? '1010' : card1 + card1);
             strategy = this.strategyChart.pairs[pairKey][dealerCard];
             handType = 'pair';
         }
-        // Check for soft hands (ace counted as 11)
         else if (handValue.hasAce && handValue.total <= 21) {
             strategy = this.strategyChart.soft[handValue.total][dealerCard];
             handType = 'soft';
         }
-        // Hard hands
         else {
             const total = Math.min(handValue.total, 21);
             strategy = this.strategyChart.hard[total] ? this.strategyChart.hard[total][dealerCard] : 'S';
@@ -277,7 +253,6 @@ class BlackjackStrategyAdvisor {
             `;
             this.strategyResult.className = `strategy-result ${strategyInfo.class}`;
             
-            // Show hit card input for hits
             if (strategy === 'H') {
                 this.showHitCardInput(cards);
             } else {
@@ -306,11 +281,9 @@ class BlackjackStrategyAdvisor {
         const newCards = [...this.currentCards, newCard];
         const newHandValue = this.calculateHandValue(newCards);
         
-        // Add the new card with animation
         const cardElement = this.createCardElement(newCard);
         this.playerCards.appendChild(cardElement);
         
-        // Update strategy
         setTimeout(() => {
             this.strategyResult.innerHTML = `
                 <div class="strategy-text">
@@ -328,7 +301,6 @@ class BlackjackStrategyAdvisor {
                 this.strategyResult.className = 'strategy-result hit';
                 this.hideHitCardInput();
             } else {
-                // Get new strategy
                 const newStrategy = this.getStrategyForHand(newCards, this.dealerCard.value);
                 const strategies = {
                     'H': { text: 'HIT', class: 'hit' },
@@ -353,7 +325,6 @@ class BlackjackStrategyAdvisor {
             }
         }, 600);
 
-        // Clear the hit card select
         this.hitCard.value = '';
     }
 
@@ -371,11 +342,9 @@ class BlackjackStrategyAdvisor {
         const newCard = cardSelect.value;
         cardsArray.push(newCard);
         
-        // Add the new card with animation
         const cardElement = this.createCardElement(newCard);
         cardsContainer.appendChild(cardElement);
         
-        // Update strategy for this hand
         setTimeout(() => {
             const handValue = this.calculateHandValue(cardsArray);
             
@@ -388,13 +357,11 @@ class BlackjackStrategyAdvisor {
                 `;
                 strategyContainer.className = 'strategy-result hit';
             } else {
-                // Get new strategy
                 const strategy = this.getStrategyForHand(cardsArray, this.dealerCard.value);
                 this.displaySplitStrategy(`splitHand${handNumber}Strategy`, strategy, handValue.total);
             }
         }, 300);
 
-        // Clear the card select
         cardSelect.value = '';
     }
 
@@ -402,11 +369,9 @@ class BlackjackStrategyAdvisor {
         this.isSplit = true;
         this.splitHandsContainer.style.display = 'grid';
         
-        // Create two hands
         const hand1Cards = [cards[0]];
         const hand2Cards = [cards[1]];
         
-        // Display split message
         this.strategyResult.innerHTML = `
             <div class="strategy-text">
                 <strong>SPLIT</strong>
@@ -416,14 +381,11 @@ class BlackjackStrategyAdvisor {
         `;
         this.strategyResult.className = 'strategy-result split';
         
-        // Display split hands
         this.displaySplitHand('splitHand1Cards', hand1Cards);
         this.displaySplitHand('splitHand2Cards', hand2Cards);
         
-        // Hide main hit input and show split message
         this.hideHitCardInput();
         
-        // Show info that user needs to manually add cards to each split hand
         this.showMessage('Please add second cards to each split hand manually using the dropdowns above', 'info');
     }
 
@@ -489,7 +451,6 @@ class BlackjackStrategyAdvisor {
             }, 150);
         }
         
-        // Clear strategy result when cards change
         this.clearStrategy();
     }
 
@@ -501,7 +462,6 @@ class BlackjackStrategyAdvisor {
             this.dealerCards.appendChild(card);
         }
         
-        // Clear strategy result when dealer card changes
         this.clearStrategy();
     }
 
@@ -510,9 +470,7 @@ class BlackjackStrategyAdvisor {
         card.className = 'card';
         card.textContent = cardValue;
         
-        // Add red color for hearts and diamonds (represented by face cards)
         if (['A', 'K', 'Q', 'J'].includes(cardValue)) {
-            // Randomly assign red or black (in real game, this would be suit-based)
             if (Math.random() > 0.5) {
                 card.classList.add('red');
             }
@@ -528,11 +486,9 @@ class BlackjackStrategyAdvisor {
         this.hideHitCardInput();
         this.isSplit = false;
         
-        // Clear split hand arrays
         this.splitHand1Cards = [];
         this.splitHand2Cards = [];
         
-        // Clear split hand displays
         const splitHand1Cards = document.getElementById('splitHand1Cards');
         const splitHand2Cards = document.getElementById('splitHand2Cards');
         const splitHand1Strategy = document.getElementById('splitHand1Strategy');
@@ -543,29 +499,24 @@ class BlackjackStrategyAdvisor {
         if (splitHand1Strategy) splitHand1Strategy.innerHTML = '';
         if (splitHand2Strategy) splitHand2Strategy.innerHTML = '';
         
-        // Clear split card selects
         this.splitHand1Card.value = '';
         this.splitHand2Card.value = '';
     }
 
     reset() {
-        // Reset all selects to empty
         this.playerCard1.value = '';
         this.playerCard2.value = '';
         this.dealerCard.value = '';
         
-        // Clear all displays
         this.playerCards.innerHTML = '';
         this.dealerCards.innerHTML = '';
         this.clearStrategy();
         
-        // Clear split hands
         document.getElementById('splitHand1Cards').innerHTML = '';
         document.getElementById('splitHand2Cards').innerHTML = '';
         document.getElementById('splitHand1Strategy').innerHTML = '';
         document.getElementById('splitHand2Strategy').innerHTML = '';
         
-        // Add reset animation
         this.mainContainer.style.transform = 'scale(0.98)';
         setTimeout(() => {
             this.mainContainer.style.transform = 'scale(1)';
@@ -575,7 +526,6 @@ class BlackjackStrategyAdvisor {
     }
 
     showMessage(message, type) {
-        // Create temporary message element
         const messageEl = document.createElement('div');
         messageEl.textContent = message;
         messageEl.style.cssText = `
@@ -594,7 +544,6 @@ class BlackjackStrategyAdvisor {
         
         document.body.appendChild(messageEl);
         
-        // Remove after 3 seconds
         setTimeout(() => {
             messageEl.style.animation = 'slideUp 0.3s ease-out';
             setTimeout(() => {
@@ -616,7 +565,6 @@ class BlackjackStrategyAdvisor {
     }
 }
 
-// CSS animations for messages
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideDown {
@@ -659,7 +607,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new BlackjackStrategyAdvisor();
 });
